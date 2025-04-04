@@ -1,7 +1,11 @@
 <template>
-  <div></div>
+  <div>
+    <button>Teacher</button>
+  </div>
 </template>
 
-<script setup></script>
+<script setup>
+let grade = 0
+</script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>
