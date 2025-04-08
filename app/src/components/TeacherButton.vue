@@ -1,6 +1,7 @@
 <template>
   <div>
-    <button>Teacher</button>
+    <h1>asd</h1>
+    <button><img src="../public/teacher.png" /></button>
   </div>
 </template>
 

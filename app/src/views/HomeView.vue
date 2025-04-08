@@ -1,9 +1,9 @@
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue'
+import TeacherButton from '../components/TeacherButton.vue'
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <TeacherButton />
   </main>
 </template>
