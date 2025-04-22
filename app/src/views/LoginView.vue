@@ -1,6 +1,12 @@
 <template>
-    <h1 class="text-4xl text-center m-6">Teacher Clicker</h1>
-    <div class="container text-center m-auto">
+    <div class="h-screen w-full flex">
+        <div class=" justify-self-top self">
+
+            <h1 class="text-4xl">Teacher Clicker</h1>
+        </div>
+        <div class="container text-center justify-self-center self-center m-auto">
+            <h2>Create an account</h2>
+            <h3>Enter an username and password</h3>
         <div class="userInput m-2">
             <label for="username" class="text-xl"> Username: </label>
             <input type="username" id="username" v-model="username" class="border-1 rounded-sm">
@@ -13,7 +19,8 @@
             <button @click="signIn" class="m-2 text-center border-2 rounded-md w-22 h-10 text-white bg-black">Sign In</button>
             <button @click="signUp" class="m-2 text-center border-2 rounded-md w-22 h-10 text-white bg-black">Sign Up</button>
         </div>
-</div>
+    </div>
+    </div>
 </template>
   
 <script setup>
