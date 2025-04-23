@@ -1,10 +1,10 @@
 <template>
-    <div class="h-screen w-full flex">
-        <div class=" justify-self-top self">
 
-            <h1 class="text-4xl">Teacher Clicker</h1>
-        </div>
-        <div class="container text-center justify-self-center self-center m-auto">
+<h1 class="text-4xl text-center">Teacher Clicker</h1>
+
+    <div class="h-screen w-full flex">
+        
+        <div class="container text-center justify-self-center self-center m-auto border-1">
             <h2>Create an account</h2>
             <h3>Enter an username and password</h3>
         <div class="userInput m-2">
