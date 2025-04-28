@@ -1,27 +1,27 @@
 <template>
-    <div class="h-screen w-full flex">
-        <div class=" justify-self-top self">
-
-            <h1 class="text-4xl">Teacher Clicker</h1>
+    <div class="flex items-center justify-center min-h-screen bg-white">
+      <div class="text-center border p-8 rounded shadow">
+        <h1 class="text-4xl mb-4">Teacher Clicker</h1>
+        <h2 class="text-xl mb-1">Create an account</h2>
+        <h3 class="mb-4">Enter a username and password</h3>
+  
+        <div class="mb-4">
+          <label for="username" class="block text-left mb-1">Username:</label>
+          <input type="text" id="username" v-model="username" class="w-full border rounded px-2 py-1">
         </div>
-        <div class="container text-center justify-self-center self-center m-auto">
-            <h2>Create an account</h2>
-            <h3>Enter an username and password</h3>
-        <div class="userInput m-2">
-            <label for="username" class="text-xl"> Username: </label>
-            <input type="username" id="username" v-model="username" class="border-1 rounded-sm">
+  
+        <div class="mb-4">
+          <label for="password" class="block text-left mb-1">Password:</label>
+          <input type="password" id="password" v-model="password" class="w-full border rounded px-2 py-1">
         </div>
-        <div class="passwordInput m-2">
-            <label for="password" class="text-xl"> Password: </label>
-            <input type="password" id="password" v-model="password" class="border-1 rounded-sm">
+  
+        <div class="flex justify-center space-x-4">
+          <button @click="signIn" class="px-4 py-2 bg-black text-white rounded hover:bg-gray-800">Sign In</button>
+          <button @click="signUp" class="px-4 py-2 bg-black text-white rounded hover:bg-gray-800">Sign Up</button>
         </div>
-        <div class="buttonContainer">
-            <button @click="signIn" class="m-2 text-center border-2 rounded-md w-22 h-10 text-white bg-black">Sign In</button>
-            <button @click="signUp" class="m-2 text-center border-2 rounded-md w-22 h-10 text-white bg-black">Sign Up</button>
-        </div>
+      </div>
     </div>
-    </div>
-</template>
+  </template>
   
 <script setup>
 import { ref } from 'vue';
