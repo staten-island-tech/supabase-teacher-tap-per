@@ -3,11 +3,11 @@
       <div class="text-center border p-8 rounded shadow">
         <h1 class="text-4xl mb-4">Teacher Clicker</h1>
         <h2 class="text-xl mb-1">Create an account</h2>
-        <h3 class="mb-4">Enter a username and password</h3>
+        <h3 class="mb-4">Enter an email and password</h3>
   
         <div class="mb-4">
-          <label for="username" class="block text-left mb-1">Username:</label>
-          <input type="text" id="username" v-model="username" class="w-full border rounded px-2 py-1">
+          <label for="email" class="block text-left mb-1">Email:</label>
+          <input type="text" id="email" v-model="email" class="w-full border rounded px-2 py-1">
         </div>
   
         <div class="mb-4">
@@ -25,15 +25,32 @@
   
 <script setup>
 import { ref } from 'vue';
+import { supabase } from '@/clients/supabase';
 let password = ref("");
-let username = ref("");
+let email = ref("");
 
-function signIn() {
-    console.log("sign in")
+async function signIn() {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: email.value,
+    password: password.value,
+  })
+  if (error) {
+    console.log(error)
+  } else {
+    console.log(data)
+  }
 }
  
-function signUp() {
-    console.log("sign up")
+async function signUp() {
+  const { data, error } = await supabase.auth.signUp({
+    email: email.value,
+    password: password.value,
+  })
+  if (error) {
+    console.log(error)
+  } else {
+    console.log(data)
+  }
 }
 </script>
 <style scoped>
