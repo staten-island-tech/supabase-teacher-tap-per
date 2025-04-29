@@ -4,7 +4,7 @@
         <h1 class="text-4xl mb-4">Teacher Clicker</h1>
         <h2 class="text-xl mb-1">Create an account</h2>
         <h3 class="mb-4">Enter an email and password</h3>
-  
+
         <div class="mb-4">
           <label for="email" class="block text-left mb-1">Email:</label>
           <input type="text" id="email" v-model="email" class="w-full border rounded px-2 py-1">
@@ -14,7 +14,7 @@
           <label for="password" class="block text-left mb-1">Password:</label>
           <input type="password" id="password" v-model="password" class="w-full border rounded px-2 py-1">
         </div>
-  
+
         <div class="flex justify-center space-x-4">
           <button @click="signIn" class="px-4 py-2 bg-black text-white rounded hover:bg-gray-800">Sign In</button>
           <button @click="signUp" class="px-4 py-2 bg-black text-white rounded hover:bg-gray-800">Sign Up</button>
@@ -51,6 +51,16 @@ async function signUp() {
   } else {
     console.log(data)
   }
+const user = data.user
+
+// Step 2: Wait for email confirmation, or immediately insert if auto-confirmation is enabled
+if (user) {
+  // Step 3: Insert into 'users' table
+  const { error: insertError } = await supabase.from('users').insert({
+    id: user.id,
+    email: user.email,
+  })
+}
 }
 </script>
 <style scoped>
