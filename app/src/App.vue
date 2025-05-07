@@ -1,9 +1,12 @@
 <script setup>
 import LoginView from './views/LoginView.vue';
+import WebsiteBase from './components/WebsiteBase.vue';
+import { RouterView } from 'vue-router';
 </script>
 
 <template>
-<LoginView></LoginView>
+<WebsiteBase></WebsiteBase>
+<RouterView></RouterView>
 </template>
 
 <style scoped>

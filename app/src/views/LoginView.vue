@@ -47,21 +47,14 @@ async function signUp() {
     password: password.value,
   })
   if (error) {
-    console.log(error)
+    console.error("Sign-up error:", error.message);
   } else {
     console.log(data)
   }
-const user = data.user
+  
+}
 
-// Step 2: Wait for email confirmation, or immediately insert if auto-confirmation is enabled
-if (user) {
-  // Step 3: Insert into 'users' table
-  const { error: insertError } = await supabase.from('users').insert({
-    id: user.id,
-    email: user.email,
-  })
-}
-}
+
 </script>
 <style scoped>
 
