@@ -30,6 +30,12 @@ let password = ref("");
 let email = ref("");
 
 async function signIn() {
+  const currentSession = await supabase.auth.getSession()
+
+  if (currentSession.data.session) {
+    console.log("Already signed in as:", currentSession.data.session.user.email)
+    return
+  }
   const { data, error } = await supabase.auth.signInWithPassword({
     email: email.value,
     password: password.value,
@@ -37,7 +43,8 @@ async function signIn() {
   if (error) {
     console.log(error)
   } else {
-    console.log(data)
+    user.value = data.user
+    console.log("Signed In", user)
   }
 }
  
@@ -49,12 +56,11 @@ async function signUp() {
   if (error) {
     console.error("Sign-up error:", error.message);
   } else {
-    console.log(data)
+    user.value = data.user
+    console.log("Signed Up", user)
   }
   
 }
-
-
 </script>
 <style scoped>
 
