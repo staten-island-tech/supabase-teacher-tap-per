@@ -1,5 +1,5 @@
 import { ref, onMounted } from 'vue'
-import { supabase } from '../supabase'
+import { supabase } from '../src/clients/supabase'
 
 export const user = ref(null)
 

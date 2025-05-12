@@ -1,5 +1,5 @@
 <script setup>
-import { user, useAuth } from '@useAuth'
+import { user, useAuth } from '../useAuth'
 const { signOut } = useAuth()
 </script>
 
@@ -18,11 +18,11 @@ const { signOut } = useAuth()
         </div>
       </div>
 
-      <div class="m-1">
+      <div>
         <div v-if="!user" class="button border-black border-2 rounded bg-amber-100">
           <router-link to="/login" class="text-xl m-3">Login</router-link>
         </div>
-        <div v-else class="button border-black border-2 rounded bg-red-200 cursor-pointer text-xl m-3" @click="signOut">
+        <div v-else class="button border-black border-2 rounded bg-red-200 cursor-pointer m-3" @click="signOut">
           Logout
         </div>
       </div>

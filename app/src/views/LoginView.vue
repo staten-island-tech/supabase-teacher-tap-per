@@ -34,6 +34,7 @@ async function signIn() {
 
   if (currentSession.data.session) {
     console.log("Already signed in as:", currentSession.data.session.user.email)
+    alert("You're already signed in.")
     return
   }
   const { data, error } = await supabase.auth.signInWithPassword({
