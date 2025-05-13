@@ -26,8 +26,12 @@
 <script setup>
 import { ref } from 'vue';
 import { supabase } from '@/clients/supabase';
+import { user } from '@/useAuth';
+import { useRouter } from 'vue-router';
+
 let password = ref("");
 let email = ref("");
+const router = useRouter()
 
 async function signIn() {
   const currentSession = await supabase.auth.getSession()
@@ -45,7 +49,7 @@ async function signIn() {
     console.log(error)
   } else {
     user.value = data.user
-    console.log("Signed In", user)
+    router.push("./")
   }
 }
  
@@ -56,9 +60,13 @@ async function signUp() {
   })
   if (error) {
     console.error("Sign-up error:", error.message);
-  } else {
-    user.value = data.user
-    console.log("Signed Up", user)
+  }
+  if (user.value = data.user) {
+    alert("This email is already registered.")
+  }
+  if (user)
+  {
+    alert("You are signed in.")
   }
   
 }

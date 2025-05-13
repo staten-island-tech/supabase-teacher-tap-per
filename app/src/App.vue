@@ -6,7 +6,9 @@ import { RouterView } from 'vue-router';
 
 <template>
 <WebsiteBase></WebsiteBase>
-<RouterView></RouterView>
+<div class="pt-24 px-5">
+    <router-view />
+</div>
 </template>
 
 <style scoped>
