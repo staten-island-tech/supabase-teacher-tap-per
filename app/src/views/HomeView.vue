@@ -4,6 +4,7 @@ import TeacherButton from '../components/TeacherButton.vue'
 
 <template>
   <main>
+    <GradeCounter />
     <TeacherButton />
   </main>
 </template>
