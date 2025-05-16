@@ -24,19 +24,16 @@
   </template>
   
 <script setup>
-import { ref } from 'vue';
-let password = ref("");
-let username = ref("");
+import { ref } from 'vue'
+let password = ref('')
+let username = ref('')
 
 function signIn() {
-    console.log("sign in")
+  console.log('sign in')
 }
- 
+
 function signUp() {
-    console.log("sign up")
+  console.log('sign up')
 }
 </script>
-<style scoped>
-
-</style>
-  
+<style scoped></style>
