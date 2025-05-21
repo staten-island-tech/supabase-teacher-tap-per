@@ -4,7 +4,7 @@ const { signOut } = useAuth()
 </script>
 <template>
   <div>
-    <div class="fixed top-0 w-full z-50 shadow-md px-5 py-2">
+    <div class="fixed top-0 w-full z-50 shadow-md px-5 py-2 bg-white">
       <div class="flex flex-wrap justify-center items-center">
         <div class="button border-black border-2 rounded bg-amber-100 m-1">
           <router-link to="/" class="text-xl m-3">Home</router-link>
@@ -27,8 +27,5 @@ const { signOut } = useAuth()
         </div>
       </div>
     </div>
-
   </div>
 </template>
-
-
