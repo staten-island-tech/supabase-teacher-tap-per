@@ -29,7 +29,7 @@
               <div class="flex flex-col items-end mt-4 md:mt-0 space-y-2">
                 <div class="text-right">
                   <p class="font-semibold text-xl">Current Count: {{ person.count }}</p>
-                  <p class="text-sm text-gray-500">Upgrades: +{{ person.upgrades }}</p>
+                  <p class="text-sm text-gray-500">Current Stats: +{{ person.upgrades }}</p>
                 </div>
                 <button @click="upgradeButton(person)" class="bg-blue-500 text-white py-2 px-4 rounded-lg">
                   Upgrade - ${{ person.cost }}
@@ -47,6 +47,8 @@
 <script setup>
 import { user } from '@/useAuth';
 import { ref } from 'vue';
+import { supabase } from '@/clients/supabase';
+
 const upgrades = ref([
       { name: "Barone", adds: 1, cost: 1, count: 0, upgrades: 0, image: "BaroneAlison.jpg" },
       { name: "Colangelo", adds: 2, cost: 10, count: 0, upgrades: 0, image: "ColangeloJonathan.jpg" },
@@ -56,12 +58,26 @@ const upgrades = ref([
       { name: "Amerosa", adds: 50, cost: 5000, count: 0, upgrades: 0, image: "https://via.placeholder.com/40" },
       { name: "Whalen", adds: 100, cost: 15000, count: 0, upgrades: 0, image: "WhalenMichael.jpg" },])
 
-function upgradeButton(x) {
-  x.cost = Math.round((x.cost * 1.04 * 100)) / 100
+async function upgradeButton(x) {
+  x.cost = Math.round((x.cost * 1.08 * 100)) / 100;
+  x.count += 1;
+  x.upgrades += x.adds;
+  console.log("Saving for user:", user.value?.id);
 
-  x.count = x.count + 1
 
-  x.upgrades = x.upgrades + x.adds
+  const { data, error } = await supabase.from('player_upgrades').upsert({
+    user_id: user.value.id,
+    name: x.name,
+    count: x.count,
+    upgrades: x.upgrades,
+  }, {
+    onConflict: ['user_id', 'name'],
+  });
+
+  if (error) {console.error("Save failed:", error.message);
+} else {
+  console.log("Upsert success:", data);
+}
 }
 
 </script>

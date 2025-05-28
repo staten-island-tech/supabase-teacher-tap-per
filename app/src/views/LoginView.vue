@@ -34,6 +34,26 @@ let password = ref("");
 let email = ref("");
 const router = useRouter()
 
+async function loadUserUpgrades() {
+  const { data, error } = await supabase
+    .from('player_upgrades')
+    .select('*')
+    .eq('user_id', user.value.id);
+
+  if (error) {
+    console.error("Load failed:", error.message);
+    return;
+  }
+
+  data.forEach(saved => {
+    const match = upgrades.value.find(u => u.name === saved.name);
+    if (match) {
+      match.count = saved.count;
+      match.upgrades = saved.upgrades;
+    }
+  });
+}
+
 async function signIn() {
   const currentSession = await supabase.auth.getSession()
 
@@ -50,6 +70,7 @@ async function signIn() {
     console.log(error)
   } else {
     user.value = data.user
+    await loadUserUpgrades();
     router.push("./")
   }
 }
