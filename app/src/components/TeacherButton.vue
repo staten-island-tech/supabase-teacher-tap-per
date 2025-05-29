@@ -1,5 +1,5 @@
 <script setup>
-import frusciHead from '../assets/frusciHead.png'
+import frusciHead from '../assets/FrusciHead.png'
 import { useCounterStore } from '../stores/counter'
 
 const counter = useCounterStore()
