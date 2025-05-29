@@ -65,14 +65,19 @@ async function upgradeButton(x) {
   console.log("Saving for user:", user.value?.id);
 
 
-  const { data, error } = await supabase.from('player_upgrades').upsert({
+  const { data, error } = await supabase
+  .from('player_upgrades')
+  .upsert({
     user_id: user.value.id,
     name: x.name,
     count: x.count,
     upgrades: x.upgrades,
   }, {
     onConflict: ['user_id', 'name'],
-  });
+  }
+  )
+  .select()
+  
 
   if (error) {console.error("Save failed:", error.message);
 } else {
