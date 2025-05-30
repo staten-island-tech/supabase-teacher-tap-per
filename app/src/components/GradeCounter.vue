@@ -1,24 +1,13 @@
 <template>
-  <div>
-    <h1>{{ counter }}</h1>
-    <button @click="incrementCounter">Increment</button>
+  <div class="text-xl font-bold">
+    <h1>Grade: {{ counter.grade }}</h1>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
 import { useCounterStore } from '../stores/counter.js'
 
-useCounterStore().count = 1
+const counter = useCounterStore()
 </script>
 
-<style scoped>
-div {
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-button {
-  margin-top: 10px;
-  font-size: 1rem;
-}
-</style>
+<style scoped></style>
