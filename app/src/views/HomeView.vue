@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import { user } from '@/useAuth';
+import { user } from '@/stores/useAuth';
 
 </script>
 

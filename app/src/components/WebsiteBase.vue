@@ -1,5 +1,5 @@
 <script setup>
-import { user, useAuth } from '../useAuth'
+import { user, useAuth } from '../stores/useAuth'
 const { signOut } = useAuth()
 </script>
 <template>

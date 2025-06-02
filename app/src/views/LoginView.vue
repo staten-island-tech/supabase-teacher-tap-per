@@ -27,32 +27,17 @@
 <script setup>
 import { ref } from 'vue';
 import { supabase } from '@/clients/supabase';
-import { user } from '@/useAuth';
+import { useAuthStore } from '@/stores/useAuth';
 import { useRouter } from 'vue-router';
+import { useUpgradeStore } from '@/stores/useUpgrade';
 
 let password = ref("");
 let email = ref("");
 const router = useRouter()
 
-async function loadUserUpgrades() {
-  const { data, error } = await supabase
-    .from('player_upgrades')
-    .select('*')
-    .eq('user_id', user.value.id);
+const upgradeStore = useUpgradeStore()
+const auth = useAuthStore()
 
-  if (error) {
-    console.error("Load failed:", error.message);
-    return;
-  }
-
-  data.forEach(saved => {
-    const match = upgrades.value.find(u => u.name === saved.name);
-    if (match) {
-      match.count = saved.count;
-      match.upgrades = saved.upgrades;
-    }
-  });
-}
 
 async function signIn() {
   const currentSession = await supabase.auth.getSession()
@@ -69,8 +54,8 @@ async function signIn() {
   if (error) {
     console.log(error)
   } else {
-    user.value = data.user
-    await loadUserUpgrades();
+    auth.user = data.user
+    await upgradeStore.loadUpgrades()
     router.push("./")
   }
 }
@@ -80,17 +65,21 @@ async function signUp() {
     email: email.value,
     password: password.value,
   })
+
   if (error) {
-    console.error("Sign-up error:", error.message);
+    if (error.status === 409) {
+      alert("This email is already registered.");
+    } else {
+      console.error("Sign-up error:", error.message);
+      alert("An error occurred during sign-up.");
+    }
+    return;
   }
-  if (user.value = data.user) {
-    alert("This email is already registered.")
+
+  if (data.user) {
+    auth.user = data.user
+    router.push('/')
   }
-  if (user)
-  {
-    alert("You are signed in.")
-  }
-  
 }
 </script>
 <style scoped></style>

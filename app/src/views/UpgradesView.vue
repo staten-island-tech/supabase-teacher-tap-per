@@ -1,15 +1,15 @@
 <template>
 <div>
-  <div v-if="!user">
+  <div v-if="!authStore.user">
     <h1>You need to be logged in to use this feature.</h1>
   </div>
-  <div v-if="user">
+  <div v-if="authStore.user">
     <div class="bg-gray-100 p-8">
       <div class="bg-gray-100 p-4 md:p-8">
         <div class="max-w-4xl mx-auto space-y-4">
           <div class="space-y-4">
             <div
-              v-for="person in upgrades"
+              v-for="person in upgradeStore.upgrades"
               :key="person.name"
               class="flex flex-col md:flex-row items-center justify-between p-4 bg-white rounded-lg shadow-md"
             >
@@ -31,7 +31,7 @@
                   <p class="font-semibold text-xl">Current Count: {{ person.count }}</p>
                   <p class="text-sm text-gray-500">Current Stats: +{{ person.upgrades }}</p>
                 </div>
-                <button @click="upgradeButton(person)" class="bg-blue-500 text-white py-2 px-4 rounded-lg">
+                <button @click="upgradeStore.upgradeButton(person)" class="bg-blue-500 text-white py-2 px-4 rounded-lg">
                   Upgrade - ${{ person.cost }}
                 </button>
               </div>
@@ -45,45 +45,24 @@
 </template>
     
 <script setup>
-import { user } from '@/useAuth';
-import { ref } from 'vue';
-import { supabase } from '@/clients/supabase';
+import { useUpgradeStore } from '@/stores/useUpgrade';
+import { useAuthStore } from '@/stores/useAuth';
+import { onMounted, watch } from 'vue';
 
-const upgrades = ref([
-      { name: "Barone", adds: 1, cost: 1, count: 0, upgrades: 0, image: "BaroneAlison.jpg" },
-      { name: "Colangelo", adds: 2, cost: 10, count: 0, upgrades: 0, image: "ColangeloJonathan.jpg" },
-      { name: "Frusci", adds: 5, cost: 100, count: 0, upgrades: 0, image: "FrusciJoseph.jpg" },
-      { name: "Partnow", adds: 10, cost: 500, count: 0, upgrades: 0, image: "Partnow.jpg" },
-      { name: "Nickolauk", adds: 25, cost: 1000, count: 0, upgrades: 0, image: "Nick.png" },
-      { name: "Amerosa", adds: 50, cost: 5000, count: 0, upgrades: 0, image: "https://via.placeholder.com/40" },
-      { name: "Whalen", adds: 100, cost: 15000, count: 0, upgrades: 0, image: "WhalenMichael.jpg" },])
+const upgradeStore = useUpgradeStore();
+const authStore = useAuthStore();
 
-async function upgradeButton(x) {
-  x.cost = Math.round((x.cost * 1.08 * 100)) / 100;
-  x.count += 1;
-  x.upgrades += x.adds;
-  console.log("Saving for user:", user.value?.id);
-
-
-  const { data, error } = await supabase
-  .from('player_upgrades')
-  .upsert({
-    user_id: user.value.id,
-    name: x.name,
-    count: x.count,
-    upgrades: x.upgrades,
-  }, {
-    onConflict: ['user_id', 'name'],
+onMounted(() => {
+  if (authStore.user) {
+    upgradeStore.loadUpgrades();
   }
-  )
-  .select()
-  
+});
 
-  if (error) {console.error("Save failed:", error.message);
-} else {
-  console.log("Upsert success:", data);
-}
-}
+watch(() => useAuth.user, (newUser) => {
+  if (newUser) {
+    upgradeStore.loadUpgrades();
+  }
+});
 
 </script>
 <style scoped>
