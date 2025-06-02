@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+  <div class="flex flex-col items-center justify-center max-h-screen">
     <button @click="counter.incrementGrade" class="focus:outline-none">
       <img :src="frusciHead" class="w-256 cursor-pointer" alt="Frusci Head" />
     </button>
