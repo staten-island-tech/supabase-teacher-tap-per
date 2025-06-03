@@ -58,7 +58,7 @@ onMounted(() => {
   }
 });
 
-watch(() => useAuth.user, (newUser) => {
+watch(() => authStore.user, (newUser) => {
   if (newUser) {
     upgradeStore.loadUpgrades();
   }

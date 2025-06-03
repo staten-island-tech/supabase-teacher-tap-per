@@ -1,4 +1,4 @@
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { supabase } from '../clients/supabase'
 import { defineStore } from 'pinia'
 import { useAuthStore } from '@/stores/useAuth';

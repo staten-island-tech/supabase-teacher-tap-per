@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import { supabase } from '../clients/supabase'
+import { defineStore } from 'pinia'
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null)

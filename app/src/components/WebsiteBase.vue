@@ -1,6 +1,10 @@
 <script setup>
-import { user, useAuth } from '../stores/useAuth'
-const { signOut } = useAuth()
+import{  useAuthStore}from '../stores/useAuth'
+const { signOut } = useAuthStore
+const auth = useAuthStore
+const { user } = storeToRefs(auth) 
+import { storeToRefs } from 'pinia'
+
 </script>
 <template>
   <div>
