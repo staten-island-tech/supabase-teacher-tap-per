@@ -19,8 +19,12 @@
 import { ref, watch, onMounted, nextTick } from 'vue'
 import { gsap } from 'gsap'
 import { useCounterStore } from '../stores/counter.js'
+import { supabase } from '../supabase'
+import { useUser } from '../useAuth'
 
 const counter = useCounterStore()
+const user = useUser()
+
 const digits = ref([])
 const digitRefs = ref([])
 
@@ -50,6 +54,10 @@ watch(
     updateDigits(newVal)
     await nextTick()
     animateDigits()
+
+    const { error } = await supabase.from('users').update({ grade: newVal }).eq('id', user.value.id)
+
+    if (error) console.error('Failed to update grade:', error)
   },
   { immediate: true },
 )
