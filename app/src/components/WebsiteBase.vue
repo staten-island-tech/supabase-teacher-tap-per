@@ -1,11 +1,11 @@
 <script setup>
-import{  useAuthStore}from '../stores/useAuth'
-const { signOut } = useAuthStore
-const auth = useAuthStore
-const { user } = storeToRefs(auth) 
+import { useAuthStore } from '../stores/useAuth'
 import { storeToRefs } from 'pinia'
-
+const auth = useAuthStore()
+const { signOut } = auth
+const { user } = storeToRefs(auth)
 </script>
+
 <template>
   <div>
     <div class="fixed top-0 w-full z-50 shadow-md px-5 py-2 bg-white">
@@ -15,9 +15,6 @@ import { storeToRefs } from 'pinia'
         </div>
         <div class="button border-black border-2 rounded bg-amber-100 m-1">
           <router-link to="/upgrades" class="text-xl m-3">Upgrades</router-link>
-        </div>
-        <div class="button border-black border-2 rounded bg-amber-100 m-1">
-          <router-link to="/profile" class="text-xl m-3">Profile</router-link>
         </div>
         <div v-if="!user" class="button border-black border-2 rounded bg-amber-100 m-1">
           <router-link to="/login" class="text-xl m-3">Login</router-link>

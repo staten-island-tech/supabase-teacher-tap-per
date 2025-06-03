@@ -8,11 +8,6 @@ const router = createRouter({
       component: () => import('../views/HomeView.vue'),
     },
     {
-      path: '/profile',
-      name: 'ProfileView',
-      component: () => import('../views/ProfileView.vue'),
-    },
-    {
       path: '/upgrades',
       name: 'UpgradesView',
       component: () => import('../views/UpgradesView.vue'),

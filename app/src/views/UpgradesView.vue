@@ -32,7 +32,8 @@
                   <p class="text-sm text-gray-500">Current Stats: +{{ person.upgrades }}</p>
                 </div>
                 <button @click="upgradeStore.upgradeButton(person)" class="bg-blue-500 text-white py-2 px-4 rounded-lg">
-                  Upgrade - ${{ person.cost }}
+                  Upgrade - ${{ person.cost.toFixed(2) }}
+
                 </button>
               </div>
             </div>
