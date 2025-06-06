@@ -53,6 +53,7 @@ async function signIn() {
   })
   if (error) {
     console.log(error)
+    alert(error)
   } else {
     auth.user = data.user
     await upgradeStore.loadUpgrades()

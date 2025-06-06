@@ -12,7 +12,7 @@ export const useUpgradeStore = defineStore('upgrades', () => {
       { name: "Frusci", adds: 5, cost: 100, count: 0, upgrades: 0, image: "FrusciJoseph.jpg" },
       { name: "Partnow", adds: 10, cost: 500, count: 0, upgrades: 0, image: "Partnow.jpg" },
       { name: "Nickolauk", adds: 25, cost: 1000, count: 0, upgrades: 0, image: "Nick.png" },
-      { name: "Amerosa", adds: 50, cost: 5000, count: 0, upgrades: 0, image: "https://via.placeholder.com/40" },
+      { name: "Amoroso", adds: 50, cost: 5000, count: 0, upgrades: 0, image: "https://via.placeholder.com/40" },
       { name: "Whalen", adds: 100, cost: 15000, count: 0, upgrades: 0, image: "WhalenMichael.jpg" },
     ]);
   
