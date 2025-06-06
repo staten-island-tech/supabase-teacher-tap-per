@@ -35,12 +35,16 @@
 <script setup>
 import { ref } from 'vue'
 import { supabase } from '@/clients/supabase'
-import { user } from '@/useAuth'
+import { useAuthStore } from '@/stores/useAuth'
 import { useRouter } from 'vue-router'
+import { useUpgradeStore } from '@/stores/useUpgrade'
 
 let password = ref('')
 let email = ref('')
 const router = useRouter()
+
+const upgradeStore = useUpgradeStore()
+const auth = useAuthStore()
 
 async function signIn() {
   const currentSession = await supabase.auth.getSession()
@@ -56,8 +60,10 @@ async function signIn() {
   })
   if (error) {
     console.log(error)
+    alert(error)
   } else {
-    user.value = data.user
+    auth.user = data.user
+    await upgradeStore.loadUpgrades()
     router.push('./')
   }
 }
@@ -67,14 +73,20 @@ async function signUp() {
     email: email.value,
     password: password.value,
   })
+
   if (error) {
-    console.error('Sign-up error:', error.message)
+    if (error.status === 409) {
+      alert('This email is already registered.')
+    } else {
+      console.error('Sign-up error:', error.message)
+      alert('An error occurred during sign-up.')
+    }
+    return
   }
-  if ((user.value = data.user)) {
-    alert('This email is already registered.')
-  }
-  if (user) {
-    alert('You are signed in.')
+
+  if (data.user) {
+    auth.user = data.user
+    router.push('/')
   }
 }
 </script>
