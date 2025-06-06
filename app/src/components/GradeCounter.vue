@@ -19,8 +19,8 @@
 import { ref, watch, onMounted, nextTick } from 'vue'
 import { gsap } from 'gsap'
 import { useCounterStore } from '../stores/counter.js'
-import { supabase } from '../supabase'
-import { useUser } from '../useAuth'
+/* import { supabase } from '@/supabase'
+import { useUser } from '@/useAuth' */
 
 const counter = useCounterStore()
 const user = useUser()
