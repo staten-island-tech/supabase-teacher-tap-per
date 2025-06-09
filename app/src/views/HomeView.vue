@@ -13,7 +13,6 @@
 <script setup>
 import { useAuthStore } from '@/stores/useAuth'
 import { storeToRefs } from 'pinia'
-import { user } from '@/useAuth'
 import GradeCounter from '@/components/GradeCounter.vue'
 import TeacherButton from '@/components/TeacherButton.vue'
 

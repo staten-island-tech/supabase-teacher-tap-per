@@ -16,18 +16,16 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, nextTick } from 'vue'
+import { ref, watch, onMounted, nextTick, watchEffect } from 'vue'
 import { gsap } from 'gsap'
 import { useCounterStore } from '../stores/counter.js'
-/* import { supabase } from '@/supabase'
-import { useUser } from '@/useAuth' */
+import { supabase } from '../clients/supabase'
+import { useAuthStore } from '../stores/useAuth'
 
 const counter = useCounterStore()
-const user = useUser()
-
+const auth = useAuthStore()
 const digits = ref([])
 const digitRefs = ref([])
-
 const digitHeight = 40
 
 function updateDigits(value) {
@@ -48,6 +46,22 @@ function animateDigits() {
   })
 }
 
+watchEffect(async () => {
+  if (auth.user) {
+    const { data, error } = await supabase
+      .from('users')
+      .select('grade')
+      .eq('id', auth.user.id)
+      .single()
+
+    if (error) {
+      console.error('Failed to fetch grade:', error)
+    } else if (data) {
+      counter.grade = data.grade || 0
+    }
+  }
+})
+
 watch(
   () => counter.grade,
   async (newVal) => {
@@ -55,9 +69,14 @@ watch(
     await nextTick()
     animateDigits()
 
-    const { error } = await supabase.from('users').update({ grade: newVal }).eq('id', user.value.id)
+    if (auth.user) {
+      const { error } = await supabase
+        .from('users')
+        .update({ grade: newVal })
+        .eq('id', auth.user.id)
 
-    if (error) console.error('Failed to update grade:', error)
+      if (error) console.error('Failed to update grade:', error)
+    }
   },
   { immediate: true },
 )
