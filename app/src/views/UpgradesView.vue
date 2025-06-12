@@ -23,8 +23,13 @@
           <p class="text-sm text-gray-500">Current Stats: +{{ person.upgrades }}</p>
         </div>
         <button
-          @click="upgradeStore.upgradeButton(person)"
-          class="bg-blue-500 text-white py-2 px-4 rounded-lg"
+          :disabled="counterStore.grade < person.cost"
+          @click="attemptUpgrade(person)"
+          :class="{
+            'bg-blue-500 text-white': counterStore.grade >= person.cost,
+            'bg-gray-400 text-gray-700 cursor-not-allowed': counterStore.grade < person.cost,
+          }"
+          class="py-2 px-4 rounded-lg transition-colors duration-200"
         >
           Upgrade - ${{ person.cost.toFixed(2) }}
         </button>
@@ -36,11 +41,13 @@
 <script setup>
 import { useUpgradeStore } from '@/stores/useUpgrade'
 import { useAuthStore } from '@/stores/useAuth'
+import { useCounterStore } from '@/stores/counter'
 import { onMounted, watch } from 'vue'
 import UpgradeList from '@/components/UpgradeList.vue'
 
 const upgradeStore = useUpgradeStore()
 const authStore = useAuthStore()
+const counterStore = useCounterStore()
 
 onMounted(() => {
   if (authStore.user) {
@@ -56,5 +63,13 @@ watch(
     }
   },
 )
+
+function attemptUpgrade(person) {
+  if (counterStore.grade >= person.cost) {
+    counterStore.grade -= person.cost
+    upgradeStore.upgradeButton(person)
+  } else {
+    console.warn('Not enough grade to buy this upgrade')
+  }
+}
 </script>
-<style scoped></style>
