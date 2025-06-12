@@ -69,7 +69,8 @@ function attemptUpgrade(person) {
     counterStore.grade -= person.cost
     upgradeStore.upgradeButton(person)
   } else {
-    console.warn('Not enough grade to buy this upgrade')
+    console.log('Not enough grade to buy this upgrade')
   }
 }
 </script>
+``
