@@ -49,36 +49,26 @@ export const useUpgradeStore = defineStore('upgrades', () => {
   }
 
   async function upgradeButton(x) {
-    if (!canBuyUpgrade(x)) {
-      console.warn('Not enough grade to buy upgrade')
-      return
-    }
+    if (!canBuyUpgrade(x)) return
 
     x.cost = Math.round(x.cost * 1.08 * 100) / 100
     x.count += 1
     x.upgrades += x.adds
-    counterStore.click += x.adds
+    counterStore.addClickPower(x.adds)
 
-    const { data, error } = await supabase
-      .from('player_upgrades')
-      .upsert(
-        {
-          user_id: auth.user.id,
-          name: x.name,
-          count: x.count,
-          upgrades: x.upgrades,
-          cost: x.cost,
-        },
-        {
-          onConflict: ['user_id', 'name'],
-        },
-      )
-      .select()
+    const { error } = await supabase.from('player_upgrades').upsert(
+      {
+        user_id: auth.user.id,
+        name: x.name,
+        count: x.count,
+        upgrades: x.upgrades,
+        cost: x.cost,
+      },
+      { onConflict: ['user_id', 'name'] },
+    )
 
     if (error) {
       console.error('Save failed:', error.message)
-    } else {
-      console.log('Upsert success:', data)
     }
   }
 

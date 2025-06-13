@@ -1,4 +1,3 @@
-// useAuth.js
 import { ref } from 'vue'
 import { supabase } from '../clients/supabase'
 import { defineStore } from 'pinia'

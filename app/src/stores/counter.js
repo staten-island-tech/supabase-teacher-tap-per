@@ -9,5 +9,9 @@ export const useCounterStore = defineStore('counter', () => {
     grade.value += click.value
   }
 
-  return { grade, click, incrementGrade }
+  function addClickPower(amount) {
+    click.value += amount
+  }
+
+  return { grade, click, incrementGrade, addClickPower }
 })
